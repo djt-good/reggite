@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.djt.mapper.DishMapper">
+    <resultMap id="BaseResultMap" type="com.djt.domain.Dish">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="category_id" jdbcType="BIGINT" property="categoryId"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="image" jdbcType="VARCHAR" property="image"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="create_user" jdbcType="BIGINT" property="createUser"/>
+        <result column="update_user" jdbcType="BIGINT" property="updateUser"/>
+        <result column="is_deleted" jdbcType="INTEGER" property="isDeleted"/>
+    </resultMap>
+
+    <!--    <select id="selectByPage" resultMap="BaseResultMap">-->
+    <!--      select * from dish-->
+    <!--      <where>-->
+    <!--        <if test="name !=null and name !=''">-->
+    <!--          and name  like concat('%',#{name},'%')-->
+    <!--        </if>-->
+    <!--      </where>-->
+    <!--      limit #{start},#{pageSize}-->
+    <!--    </select>-->
+
+
+    <resultMap id="BaseResultMap1" type="com.djt.domain.DishDto">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="category_id" jdbcType="BIGINT" property="categoryId"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="image" jdbcType="VARCHAR" property="image"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="create_user" jdbcType="BIGINT" property="createUser"/>
+        <result column="update_user" jdbcType="BIGINT" property="updateUser"/>
+        <result column="is_deleted" jdbcType="INTEGER" property="isDeleted"/>
+        <result column="categoryname" jdbcType="VARCHAR" property="categoryName"></result>
+    </resultMap>
+
+    <select id="selectByPage" resultMap="BaseResultMap1">
+        select d.*, c.name categoryname
+        from dish d
+        left join category c
+        on d.category_id = c.id
+        <where>
+            <if test="name !=null and name !=''">
+                and d.name like concat('%',#{name},'%')
+            </if>
+        </where>
+        limit #{start},#{pageSize}
+    </select>
+
+
+
+    <resultMap id="BaseResultMap2" type="com.djt.domain.DishDto">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="category_id" jdbcType="BIGINT" property="categoryId"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="image" jdbcType="VARCHAR" property="image"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="create_user" jdbcType="BIGINT" property="createUser"/>
+        <result column="update_user" jdbcType="BIGINT" property="updateUser"/>
+        <result column="is_deleted" jdbcType="INTEGER" property="isDeleted"/>
+        <result column="categoryname" jdbcType="VARCHAR" property="categoryName"></result>
+        <collection property="flavors" ofType="DishFlavor">
+            <result column="dfname" jdbcType="VARCHAR" property="name"></result>
+            <result column="dfvalue" jdbcType="VARCHAR" property="value"></result>
+        </collection>
+    </resultMap>
+    <select id="selectByid" resultMap="BaseResultMap2">
+        select  d.* ,c.name categoryname,df.name dfname,df.`value` dfvalue
+        from dish d
+                 inner join category  c
+
+
+                            on c.id=d.category_id
+                 inner JOIN dish_flavor df
+                            on  df.dish_id = d.id
+                                and d.id=#{id}
+    </select>
+
+
+
+
+    <resultMap id="BaseResultMap3" type="com.djt.domain.DishDto">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="category_id" jdbcType="BIGINT" property="categoryId"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="image" jdbcType="VARCHAR" property="image"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="create_user" jdbcType="BIGINT" property="createUser"/>
+        <result column="update_user" jdbcType="BIGINT" property="updateUser"/>
+        <result column="is_deleted" jdbcType="INTEGER" property="isDeleted"/>
+        <result column="categoryname" jdbcType="VARCHAR" property="categoryName"></result>
+        <collection property="flavors" ofType="DishFlavor">
+            <result column="dfname" jdbcType="VARCHAR" property="name"></result>
+            <result column="dfvalue" jdbcType="VARCHAR" property="value"></result>
+        </collection>
+    </resultMap>
+    <select id="selectCategoryId2" resultType="com.djt.domain.DishDto">
+
+        select  d.* ,c.name categoryname,df.name dfname,df.`value` dfvalue
+        from dish d
+                 inner join category  c
+
+
+                            on c.id=d.category_id
+                 inner JOIN dish_flavor df
+                            on  df.dish_id = d.id
+                                and c.id=#{categoryId}
+                                and d.`status` =1
+
+    </select>
+
+</mapper>
